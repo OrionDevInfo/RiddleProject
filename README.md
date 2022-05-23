@@ -8,7 +8,7 @@
 ## Mise en route
 - Complétez la table `Config` de votre base de données
 - Ouvrez un Terminal dans ce dossier et utilisez `npm install`
-- Après l'installation des modules nécessaires, utilisez `npm run start` pour démarrer le bot.
+- Après l'installation des modules nécessaires, utilisez `npm run bot` pour démarrer le bot.
 - Complétez les différentes tables de votre base de données (sauf `Player`)
 
 ## Modules
