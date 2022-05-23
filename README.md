@@ -3,7 +3,7 @@
 ## Prérequis
 - [Node.js v16.6.0 minimum](https://nodejs.org/)
 - [Une base de données](./utils/model.sql)
-- [Un serveur Discord](https://discord.new/wVEhP9G2M5Sc)
+- [Un serveur Discord](https://discord.new/cvuA2uZjKdqe)
 
 ## Mise en route
 - Téléchargez le fichier `.zip` sur la [page Github du projet](https://github.com/OrionDevInfo/RiddleProject)

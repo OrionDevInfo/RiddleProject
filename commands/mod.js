@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const { ASCII_GENERAL_CI } = require('mysql/lib/protocol/constants/charsets');
 
 module.exports = {
 	data: new SlashCommandBuilder()
