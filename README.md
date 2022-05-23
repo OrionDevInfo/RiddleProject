@@ -6,6 +6,7 @@
 - [Un serveur Discord](https://discord.new/wVEhP9G2M5Sc)
 
 ## Mise en route
+- Téléchargez le fichier `.zip` sur la [page Github du projet](https://github.com/OrionDevInfo/RiddleProject)
 - Complétez la table `Config` de votre base de données
 - Complétez le fichier [database.js](./utils/database.js) avec les informations de votre base de données
 - Ouvrez un Terminal dans ce dossier et utilisez `npm install`
