@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
+const { ASCII_GENERAL_CI } = require('mysql/lib/protocol/constants/charsets');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -9,6 +10,8 @@ module.exports = {
             .setName('admin').setDescription('Admin Tools')
             .addSubcommand(subcommand => subcommand.setName('destroy').setDescription('Destroying bot client & process.'))
             .addSubcommand(subcommand => subcommand.setName('leaderboard').setDescription('Lauching leaderboard webhook.'))
+            .addSubcommand(subcommand => subcommand.setName('rules').setDescription('Lauching rules webhook.'))
+            .addSubcommand(subcommand => subcommand.setName('howtoplay').setDescription('Lauching howtoplay webhook.'))
             .addSubcommand(subcommand => subcommand
                 .setName('deleteplayer').setDescription('Delete a player.')
                 .addUserOption(option => option.setName('player').setDescription('Select a player.').setRequired(true))
@@ -72,6 +75,10 @@ module.exports = {
                 embeds: [e]
             }).then(sentMessage => {
                 msgId = sentMessage.id;
+                interaction.reply({
+                    content: 'Started.',
+                    ephemeral: true
+                });                
                 edit = async () => {
                     client.con.query(`SELECT * FROM Player ORDER BY score DESC LIMIT 10`, async (err, rows) => {
                         if (err) throw err;
@@ -104,6 +111,56 @@ module.exports = {
                 };
                 edit();
             });
+        }
+        if (interaction.options.getSubcommand() === 'rules') {
+            const e = new MessageEmbed({
+                color: '#2D3264', timestamp: Date.now(),
+                footer: { text: client.embed.footer, iconURL: client.embed.iconURL },
+                title: `Règles du serveur`,
+                fields: [
+                    {name : 'Être civil et respecteux', value : 'Traiter tout le monde avec respect. Aucun harcélement, sexisme, racisme ou discours haineux ne sera toléré.'}, 
+                    {name : 'Pas de spam ni d\'auto-promotion', value : 'Cela inclut les invitations de serveurs, les pubs etc sans la permission d\'un administrateur. Cette règle inclut les messages privés aux membres du serveur.'}, 
+                    {name : 'Pas de contenu NSFW', value : 'Pas de contenu pour adultes ou obscène. Cela inclut les messages, images ou liens incluant la nudité, le sexe, la violence et le gore.'},
+                    {name : 'Aidez à garder le serveur en bon état', value : 'Si vous voyez quelque chose ne respectant pas les règles du serveur ou vous rendant mal à l\'aise, merci de contacter le staff.'},
+                    {name : 'Respectez le travail effectué par les développeurs', value : 'Ne partagez aucun indice permettant de réussir les énigmes. Les équipes ne sont pas autorisées. Il est également interdit d\'écrire des messages dans les salons de la catégorie GAME.'},
+                    {name : '\u200B', value : 'PS : Si vous utilisez internet pour répondre aux énigmes, vous gâchez votre expérience de jeu et cela ne vous apportera rien. Réfléchissez, vous trouverez les réponses par vous même.'}
+                ]
+            });
+            client.web.rules.send({
+                username: client.user.username,
+                avatarURL: client.user.avatarURL(),
+                embeds: [e]
+            }).then(
+                interaction.reply({
+                    content: 'Sent.',
+                    ephemeral: true
+                })
+            );
+        }
+        if (interaction.options.getSubcommand() === 'howtoplay') {
+            const e = new MessageEmbed({
+                color: '#2D3264', timestamp: Date.now(),
+                footer: { text: client.embed.footer, iconURL: client.embed.iconURL },
+                title: `Liste des commandes disponibles`,
+                fields: [
+                    {name : '/start', value : 'Utilisez cette commande dans <#955062479229169744> pour commencer le jeu.'}, 
+                    {name : '/question', value : 'Saisissez cette commande dans le salon de jeu pour afficher la question de votre niveau.'}, 
+                    {name : '/answer', value : 'Écrivez cette commande dans le salon de jeu pour proposer une réponse à l\'énigme'},
+                    {name : '/invit', value : 'Recopiez le lien envoyé en réponse et partagez-le pour promouvoir le serveur.'},
+                    {name : '/ping', value : 'Donne des informations sur le bot et sur le temps de latence'},
+                    {name : '/leaderboard', value : 'Permet de voir le classement général en direct.'}
+                ]
+            });
+            client.web.howtoplay.send({
+                username: client.user.username,
+                avatarURL: client.user.avatarURL(),
+                embeds: [e]
+            }).then(
+                interaction.reply({
+                    content: 'Sent.',
+                    ephemeral: true
+                })
+            );
         }
 	},
 };
