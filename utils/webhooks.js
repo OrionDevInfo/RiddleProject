@@ -2,7 +2,7 @@ const { WebhookClient } = require("discord.js");
 
 module.exports = {
     addWebhooks: async function (client) {
-        client.con.query(`SELECT * FROM Config WHERE id LIKE ('rules%' OR 'howtoplay%' OR 'leaderboard%')`, async (err, rows) => {
+        client.con.query(`SELECT * FROM Config WHERE id LIKE 'rules%' OR id LIKE 'howtoplay%' OR id LIKE 'leaderboard%'`, async (err, rows) => {
             if (err) throw err;
             const rules = new WebhookClient({
                 url: rows[0].value

@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -99,7 +100,7 @@ module.exports = {
                             embeds: [e]
                         });
                     });
-                    setTimeout(edit, 20 * 1000);
+                    setTimeout(edit, 60 * 60 * 1000); // Each hour
                 };
                 edit();
             });
